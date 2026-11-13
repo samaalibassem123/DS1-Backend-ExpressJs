@@ -8,8 +8,8 @@ const router = Router();
 // Ay user connecté ynajjem ychouf el profil mte3ou
 router.get("/profile", authenticate, getProfile);
 
-// Ken el admin ynajjem ychouf liste el users el kol
-router.get("/", authenticate, authorizeRoles("admin"), getAllUsers);
+// Ken el manager ynajjem ychouf liste el users el kol
+router.get("/", authenticate, authorizeRoles("manager"), getAllUsers);
 
 export default router;
 
