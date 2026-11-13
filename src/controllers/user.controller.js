@@ -1,4 +1,4 @@
-import User from "../models/User.js";
+import Utilisateur from "../models/Utilisateur.js";
 import { getUserById } from "../services/AuthService.js";
 
 // Controller yraja3 el profil mta3 el user elli connecté: GET /api/users/profile
@@ -18,7 +18,7 @@ export const getProfile = async (req, res) => {
 // Controller yraja3 liste el users el kol (ken lel admin): GET /api/users
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password");
+    const users = await Utilisateur.find().select("-password");
 
     return res.status(200).json({ users });
   } catch (error) {

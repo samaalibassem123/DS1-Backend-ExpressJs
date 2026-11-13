@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import User from "../models/User.js";
+import Utilisateur from "../config/entities/Utilisateur.js";
 import { generateToken } from "../utils/jwt.js";
 
 // Helper sghir yasna3 erreur m3a status code HTTP (400, 401, 404, 409...)
@@ -29,7 +29,7 @@ const createUserToken = (user) =>
 // Service mta3 el inscription (Register)
 export const registerUser = async ({ name, email, password, role }) => {
   // Nchoufou ken fama user ekher deja 3andou nafs el email
-  const existingUser = await User.findOne({ email });
+  const existingUser = await Utilisateur.findOne({ email });
   if (existingUser) {
     throw createError("Hedha el email deja mosta3mel", 409);
   }
@@ -38,7 +38,7 @@ export const registerUser = async ({ name, email, password, role }) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   // Nasn3ou el user el jdid fel base de données
-  const user = await User.create({
+  const user = await Utilisateur.create({
     name,
     email,
     password: hashedPassword,
@@ -57,7 +57,7 @@ export const registerUser = async ({ name, email, password, role }) => {
 // Service mta3 el connexion (Login)
 export const loginUser = async ({ email, password }) => {
   // Nlawwjou 3al user bel email w nziidou +password khater select: false fel schema
-  const user = await User.findOne({ email }).select("+password");
+  const user = await Utilisateur.findOne({ email }).select("+password");
   if (!user) {
     throw createError("Email wala mot de passe ghalet", 401);
   }
@@ -79,7 +79,7 @@ export const loginUser = async ({ email, password }) => {
 
 // Njibou user bel ID mte3ou
 export const getUserById = async (userId) => {
-  const user = await User.findById(userId);
+  const user = await Utilisateur.findById(userId);
   if (!user) {
     throw createError("El user hedha mouch mawjoud", 404);
   }
